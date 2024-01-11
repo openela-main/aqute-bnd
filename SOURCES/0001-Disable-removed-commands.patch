@@ -1,0 +1,107 @@
+diff -ur aqute-bnd-5.2.0.orig/biz.aQute.bnd/src/aQute/bnd/main/bnd.java aqute-bnd-5.2.0/biz.aQute.bnd/src/aQute/bnd/main/bnd.java
+--- aqute-bnd-5.2.0.orig/biz.aQute.bnd/src/aQute/bnd/main/bnd.java	2020-10-14 22:03:53.000000000 +0200
++++ aqute-bnd-5.2.0/biz.aQute.bnd/src/aQute/bnd/main/bnd.java	2021-08-02 18:01:59.894715497 +0200
+@@ -106,7 +106,6 @@
+ import aQute.bnd.osgi.Verifier;
+ import aQute.bnd.osgi.eclipse.EclipseClasspath;
+ import aQute.bnd.print.JarPrinter;
+-import aQute.bnd.repository.maven.provider.NexusCommand;
+ import aQute.bnd.service.Actionable;
+ import aQute.bnd.service.RepositoryPlugin;
+ import aQute.bnd.service.action.Action;
+@@ -3922,54 +3921,6 @@
+ 	}
+ 
+ 	/**
+-	 * Resolve command
+-	 *
+-	 * @throws Exception
+-	 */
+-
+-	public void _resolve(ResolveCommand.ResolveOptions options) throws Exception {
+-		ResolveCommand rc = new ResolveCommand(this);
+-		String help = options._command()
+-			.subCmd(options, rc);
+-		if (help != null)
+-			out.println(help);
+-		getInfo(rc);
+-		rc.close();
+-	}
+-
+-	/**
+-	 * Remote command
+-	 *
+-	 * @throws Exception
+-	 */
+-
+-	public void _remote(RemoteCommand.RemoteOptions options) throws Exception {
+-		RemoteCommand rc = new RemoteCommand(this, options);
+-		String help = options._command()
+-			.subCmd(options, rc);
+-		if (help != null)
+-			out.println(help);
+-		getInfo(rc);
+-		rc.close();
+-	}
+-
+-	/**
+-	 * Nexus commands
+-	 *
+-	 * @throws Exception
+-	 */
+-
+-	public void _nexus(NexusCommand.NexusOptions options) throws Exception {
+-		NexusCommand rc = new NexusCommand(this, options);
+-		String help = options._command()
+-			.subCmd(options, rc);
+-		if (help != null)
+-			out.println(help);
+-		getInfo(rc);
+-		rc.close();
+-	}
+-
+-	/**
+ 	 * Export a bndrun file
+ 	 */
+ 	interface ExportOptions extends ProjectWorkspaceOptions {
+@@ -4424,15 +4375,6 @@
+ 		}
+ 	}
+ 
+-	@Description("Start an interactive shell")
+-	public void _shell(Shell.ShellOptions options) throws Exception {
+-		try (Shell shell = new Shell(this, options)) {
+-			shell.loop();
+-		} finally {
+-			out.println("done");
+-		}
+-	}
+-
+ 	public Workspace getWorkspace() {
+ 		return workspace;
+ 	}
+@@ -4479,24 +4421,6 @@
+ 
+ 	}
+ 
+-	@Description("Generate and export reports of a workspace, a project or of a jar.")
+-	public void _exportreport(ExportReportCommand.ReporterOptions options) throws Exception {
+-		ExportReportCommand mc = new ExportReportCommand(this);
+-		mc.run(options);
+-		getInfo(mc);
+-	}
+-
+-	@Description("Maintain Maven Bnd Repository GAV files")
+-	public void _mbr(MbrCommand.MrOptions options) throws Exception {
+-		MbrCommand c = new MbrCommand(this, options);
+-		CommandLine cl = new CommandLine(this);
+-		String s = cl.subCmd(options, c);
+-		if (s != null) {
+-			out.println(s);
+-		}
+-		getInfo(c);
+-	}
+-
+ 	@Description("Generate source code")
+ 	interface GenerateOptions extends ProjectWorkspaceOptions {
+ 
